@@ -124,22 +124,23 @@ var wUrl=`${hostURL}/w/${url}`;
   
 bot.sendChatAction(cid,"typing");
 if(use1pt){
-var x=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(cUrl)}`).then(res => res.json());
-var y=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(wUrl)}`).then(res => res.json());
+var x = await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(cUrl)}`).then(res => res.json());
+var y = await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(wUrl)}`).then(res => res.json());
 
-  let f = "";
-      let g = "";
+let f = "";
+let g = "";
 
-      for (const c in x) {
-        f += x[c] + "\n\n";
-      }
-
-      for (const c in y) {
-        g += y[c] + "\n\n";
-      }
-  
-bot.sendMessage(cid, `New links has been created successfully.You can use any one of the below links.\nURL: ${msg}\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${f}\n\n🌐 WebView Page Link\n${g}`,m);
+// Process the response for CloudFlare links
+for (const c in x) {
+  f += x[c].replace(/,/g, '\n') + "\n\n";
 }
+
+// Process the response for WebView links
+for (const c in y) {
+  g += y[c].replace(/,/g, '\n') + "\n\n";
+}
+
+bot.sendMessage(cid, `New links have been created successfully. You can use any one of the below links.\nURL: ${msg}\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${f}\n\n🌐 WebView Page Link\n${g}`, m);}
 else{
 
 bot.sendMessage(cid, `New links has been created successfully.\nURL: ${msg}\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${cUrl}\n\n🌐 WebView Page Link\n${wUrl}`,m);
