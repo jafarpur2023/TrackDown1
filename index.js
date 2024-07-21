@@ -130,13 +130,7 @@ var y=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(w
   var f = x.urls.join("\n");
             var g = y.urls.join("\n");
 
-for(var c in x){
-f+=x[c]+"\n";
-}
 
-for(var c in y){
-g+=y[c]+"\n";
-}
   
 bot.sendMessage(cid, `New links has been created successfully.You can use any one of the below links.\nURL: ${msg}\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${f}\n\n🌐 WebView Page Link\n${g}`,m);
 }
