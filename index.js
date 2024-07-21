@@ -16,7 +16,7 @@ app.set("view engine", "ejs");
 //Modify your URL here
 var hostURL="https://trackdown-k1l1.onrender.com";
 //TOGGLE for Shorters
-var use1pt=false;
+var use1pt=true;
 
 
 
@@ -124,8 +124,8 @@ var wUrl=`${hostURL}/w/${url}`;
   
 bot.sendChatAction(cid,"typing");
 if(use1pt){
-var x=await fetch(`https://short-link-api.vercel.app/?query=${encodeURIComponent(cUrl)}`).then(res => res.json());
-var y=await fetch(`https://short-link-api.vercel.app/?query=${encodeURIComponent(wUrl)}`).then(res => res.json());
+var x=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(cUrl)}`).then(res => res.json());
+var y=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(wUrl)}`).then(res => res.json());
 
 var f="",g="";
 
