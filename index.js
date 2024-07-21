@@ -16,7 +16,7 @@ app.set("view engine", "ejs");
 //Modify your URL here
 var hostURL="https://trackdown-k1l1.onrender.com";
 //TOGGLE for Shorters
-var use1pt=true;
+var use1pt=false;
 
 
 
