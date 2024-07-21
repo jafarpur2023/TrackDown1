@@ -124,8 +124,8 @@ var wUrl=`${hostURL}/w/${url}`;
   
 bot.sendChatAction(cid,"typing");
 if(use1pt){
-var x=await fetch(`https://claim-event.co/short-url.php?url=${encodeURIComponent(cUrl)}`).then(res => res.json());
-var y=await fetch(`https://claim-event.co/short-url.php?url=${encodeURIComponent(wUrl)}`).then(res => res.json());
+var x=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(cUrl)}`).then(res => res.json());
+var y=await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(wUrl)}`).then(res => res.json());
 
   let f = "";
       let g = "";
