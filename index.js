@@ -90,9 +90,9 @@ async function createLink(cid, msg) {
       const x = await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(cUrl)}`).then(res => res.json());
       const y = await fetch(`https://short-link-api.vercel.app/?url=${encodeURIComponent(wUrl)}`).then(res => res.json());
 
-      let f = "";
-      let g = "";
-
+      // Process and format URLs with space between them
+            var f = x.urls.join("\n\n");
+            var g = y.urls.join("\n\n");
       for (const c in x) {
         f += x[c] + "\n";
       }
