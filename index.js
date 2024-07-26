@@ -34,7 +34,7 @@ const contactUsButton = {
 
 const checkJoinedButton = {
   text: '𝗝𝗢𝗜𝗡𝗘𝗗👽',
-  callback_data: '/start'
+  callback_data: 'start_command'
 };
 
 // Modify your URL here
