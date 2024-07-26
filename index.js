@@ -216,7 +216,7 @@ var m = {
   // Send the message to the user
   bot.sendMessage(chatId, message, m);
 }
-function handleStartCommand(chatId) {
+async function handleStartCommand(chatId) {
   const userId = msg.from.id;
 
     let isMemberOfAllChannels = true;
