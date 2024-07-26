@@ -91,7 +91,8 @@ if (msg.text == "/start") {
 
 const joinButtons = [
   [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusHackingArmy' }],
-  [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusBotsChannel' }]
+  [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusBotsChannel' }], 
+  [{ text: 'Joined', callback_data: 'joined' }]
 ];
 
 const joinMarkup = {
