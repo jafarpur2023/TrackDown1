@@ -237,24 +237,15 @@ async function handleStartCommand(chatId) {
     }
 
     if (!isMemberOfAllChannels) {
-      const joinMessage = `Welcome! Please join both channels. After joining, tap "JOINED" to confirm.`;
-      const joinButtons = channels.map(channel => [{ text: 'JOIN CHANNEL', url: channel }, { text: 'Joined', callback_data: 'joined' }]);
       
-      const joinMarkup = {
-        reply_markup: JSON.stringify({
-          inline_keyboard: joinButtons
-        })
-      };
-
-      bot.sendMessage(chatId, joinMessage, joinMarkup);
-    } else {
+    }  else {
       const termsMarkup = {
         reply_markup: JSON.stringify({
           "inline_keyboard": [[{ text: "ACCEPT TERMS AND CONDITIONS", callback_data: "terms" }]]
         })
       };
 
-      bot.sendMessage(chatId, `Read the terms and conditions. By using this bot, you agree to them.`, termsMarkup);
+      bot.sendMessage(chatId, `Read the terms and conditions of this bot. If you use this bot so you agree to abide by our terms and conditions. This bot is made available for educational purposes only. I am not responsible for any illegal activities that result from the use of this bot. If you use this bot, you do so at your own risk. And if it causes any harm to anyone, then you yourself will be responsible for it. And thank you for using our service.`, termsMarkup);
     }
   } catch (error) {
     console.error('Error in handleStartCommand:', error);
