@@ -92,7 +92,7 @@ if (msg.text == "/start") {
 const joinButtons = [
   [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusHackingArmy' },
   { text: 'JOIN CHANNEL', url: 'https://t.me/RenusBotsChannel' }], 
-  [{ text: 'Joined', callback_data: 'joined' }]
+  [{ text: 'JOINED', callback_data: 'joined' }]
 ];
 
 const joinMarkup = {
@@ -237,10 +237,21 @@ async function handleStartCommand(chatId) {
     }
 
     if (!isMemberOfAllChannels) {
-      bot.answerCallbackQuery(queryId, {
-      text: "You have to join our all channels in order to use this bot",
-      show_alert: true
-    });
+            var joinMes = `Hey user if you want to use this bot. So you have to join both these channels. otherwise this bot will not work. If you have joined both the channels. Then tap the "JOINED" button below to confirm your membership. If you are thinking that without joining I will use the bot. So you are wasting your time.`;
+
+const joinButtons = [
+  [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusHackingArmy' },
+  { text: 'JOIN CHANNEL', url: 'https://t.me/RenusBotsChannel' }], 
+  [{ text: 'JOINED', callback_data: 'joined' }]
+];
+
+const joinMarkup = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: joinButtons
+  })
+};
+
+      bot.sendMessage(chatId, joinMes, joinMarkup);
     }  else {
       const termsMarkup = {
         reply_markup: JSON.stringify({
