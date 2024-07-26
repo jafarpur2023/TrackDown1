@@ -237,7 +237,10 @@ async function handleStartCommand(chatId) {
     }
 
     if (!isMemberOfAllChannels) {
-      
+      bot.answerCallbackQuery(callbackQuery.id, {
+      text: "You have to join our all channels in order to use this bot",
+      show_alert: true
+    });
     }  else {
       const termsMarkup = {
         reply_markup: JSON.stringify({
