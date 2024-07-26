@@ -237,7 +237,7 @@ async function handleStartCommand(chatId) {
     }
 
     if (!isMemberOfAllChannels) {
-      bot.answerCallbackQuery(callbackQuery.id, {
+      bot.answerCallbackQuery(queryId, {
       text: "You have to join our all channels in order to use this bot",
       show_alert: true
     });
